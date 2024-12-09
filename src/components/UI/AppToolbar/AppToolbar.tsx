@@ -18,9 +18,7 @@ const AppToolbar = () => {
         </Typography>
       </Toolbar>
     </AppBar>
-
   );
-
 };
 
 export default AppToolbar;
