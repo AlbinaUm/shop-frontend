@@ -14,6 +14,8 @@ const NewProduct = () => {
   const navigate = useNavigate();
 
   const onSubmitForm = async (product: ProductMutation) => {
+
+
     await dispatch(createProduct(product));
     toast.success('Product was successfully created!');
     navigate('/products');

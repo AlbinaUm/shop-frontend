@@ -31,7 +31,7 @@ const Products = () => {
         </Grid>
       </Grid>
 
-      <Grid container direction="row" spacing={1}>
+      <Grid container direction={"column"}>
 
         {isFetchProductsLoading ? <CircularProgress /> :
           <>
@@ -43,6 +43,7 @@ const Products = () => {
                     id={product.id}
                     title={product.title}
                     price={product.price}
+                    image={product.image}
                   />
                 ))}
               </>

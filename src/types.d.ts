@@ -3,11 +3,13 @@ export interface Product {
   title: string;
   description: string;
   price: number;
+  image: string | null;
 }
 
 
 export interface ProductMutation {
   title: string;
   description: string;
-  price: number;
+  price:  string;
+  image: File | null;
 }
