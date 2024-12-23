@@ -6,10 +6,16 @@ export interface Product {
   image: string | null;
 }
 
-
 export interface ProductMutation {
+  category_id: string;
   title: string;
   description: string;
-  price:  string;
+  price: string;
   image: File | null;
+}
+
+export interface Category {
+  id: string;
+  title: string;
+  description: string;
 }

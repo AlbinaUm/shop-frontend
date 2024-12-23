@@ -1,12 +1,11 @@
-import Grid from '@mui/material/Grid2';
-import { Button, CircularProgress, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
-import { useEffect } from 'react';
-import { fetchProducts } from '../productsThunk.ts';
-import { selectFetchLoading, selectProductsItems } from '../productsSlice.ts';
-import ProductItem from '../components/ProductItem.tsx';
-
+import Grid from "@mui/material/Grid2";
+import { Button, CircularProgress, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks.ts";
+import { useEffect } from "react";
+import { fetchProducts } from "../productsThunk.ts";
+import { selectFetchLoading, selectProductsItems } from "../productsSlice.ts";
+import ProductItem from "../components/ProductItem.tsx";
 
 const Products = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +17,7 @@ const Products = () => {
   }, [dispatch]);
 
   return (
-    <Grid container direction={'column'} spacing={2}>
+    <Grid container direction={"column"} spacing={2}>
       <Grid container justifyContent="space-between" alignItems="center">
         <Grid>
           <Typography variant="h4">Products</Typography>
@@ -32,12 +31,15 @@ const Products = () => {
       </Grid>
 
       <Grid container direction={"column"}>
-
-        {isFetchProductsLoading ? <CircularProgress /> :
+        {isFetchProductsLoading ? (
+          <CircularProgress />
+        ) : (
           <>
-            {products.length === 0 && !isFetchProductsLoading ? <Typography variant="h6">No products yet</Typography> :
+            {products.length === 0 && !isFetchProductsLoading ? (
+              <Typography variant="h6">No products yet</Typography>
+            ) : (
               <>
-                {products.map(product => (
+                {products.map((product) => (
                   <ProductItem
                     key={product.id}
                     id={product.id}
@@ -47,9 +49,9 @@ const Products = () => {
                   />
                 ))}
               </>
-            }
+            )}
           </>
-        }
+        )}
       </Grid>
     </Grid>
   );

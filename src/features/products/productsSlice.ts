@@ -1,7 +1,7 @@
-import { Product } from '../../types';
-import { createSlice } from '@reduxjs/toolkit';
-import { createProduct, fetchProducts } from './productsThunk.ts';
-import { RootState } from '../../app/store.ts';
+import { Product } from "../../types";
+import { createSlice } from "@reduxjs/toolkit";
+import { createProduct, fetchProducts } from "./productsThunk.ts";
+import { RootState } from "../../app/store.ts";
 
 interface IProductsState {
   items: Product[];
@@ -16,12 +16,13 @@ const initialState: IProductsState = {
 };
 
 export const selectProductsItems = (state: RootState) => state.products.items;
-export const selectFetchLoading = (state: RootState) => state.products.fetchLoading;
-export const selectCreateLoading = (state: RootState) => state.products.createLoading;
-
+export const selectFetchLoading = (state: RootState) =>
+  state.products.fetchLoading;
+export const selectCreateLoading = (state: RootState) =>
+  state.products.createLoading;
 
 export const productsSlice = createSlice({
-  name: 'products',
+  name: "products",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -29,7 +30,7 @@ export const productsSlice = createSlice({
       .addCase(fetchProducts.pending, (state) => {
         state.fetchLoading = true;
       })
-      .addCase(fetchProducts.fulfilled, (state, {payload: products}) => {
+      .addCase(fetchProducts.fulfilled, (state, { payload: products }) => {
         state.fetchLoading = false;
         state.items = products;
       })
@@ -45,10 +46,8 @@ export const productsSlice = createSlice({
       })
       .addCase(createProduct.rejected, (state) => {
         state.createLoading = false;
-      })
-  }
-
-
+      });
+  },
 });
 
 export const productsReducer = productsSlice.reducer;
