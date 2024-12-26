@@ -13,7 +13,7 @@ interface Props {
 }
 
 const initialState = {
-  category_id: "",
+  category: "",
   title: "",
   price: "",
   description: "",
@@ -66,8 +66,9 @@ const ProductForm: React.FC<Props> = ({ onSubmit }) => {
               <Select
                 labelId="category"
                 id="category_id"
-                value={form.category_id}
-                name="category_id"
+                value={form.category}
+                name="category"
+                required
                 label="Category"
                 onChange={selectChangeHandler}
               >
@@ -75,7 +76,7 @@ const ProductForm: React.FC<Props> = ({ onSubmit }) => {
                   Select category
                 </MenuItem>
                 {categories.map((category) => (
-                  <MenuItem key={category.id} value={category.id}>
+                  <MenuItem key={category._id} value={category._id}>
                     {category.title}
                   </MenuItem>
                 ))}
@@ -89,6 +90,7 @@ const ProductForm: React.FC<Props> = ({ onSubmit }) => {
             id="title"
             name="title"
             label="Title"
+            required
             value={form.title}
             onChange={inputChangeHandler}
           />
@@ -99,6 +101,7 @@ const ProductForm: React.FC<Props> = ({ onSubmit }) => {
             id="price"
             name="price"
             label="Price"
+            required
             value={form.price}
             onChange={inputChangeHandler}
           />
