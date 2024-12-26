@@ -11,15 +11,17 @@ import { ArrowForward } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import NoPictureImage from "../../../assets/noPicture.png";
 import { apiUrl } from "../../../globalConstants.ts";
+import { Category } from '../../../types';
 
 interface Props {
   title: string;
   price: number;
   id: string;
   image?: string | null | undefined;
+  category: Category;
 }
 
-const ProductItem: React.FC<Props> = ({ title, price, id, image }) => {
+const ProductItem: React.FC<Props> = ({ title, price, id, image, category }) => {
   let productsImage = NoPictureImage;
 
   if (image) {
@@ -38,6 +40,7 @@ const ProductItem: React.FC<Props> = ({ title, price, id, image }) => {
         />
 
         <CardContent>
+          <p><strong>Category: </strong>{category ? category.title : '-'}</p>
           <strong>Price: {price} KGS</strong>
         </CardContent>
         <CardActions>
