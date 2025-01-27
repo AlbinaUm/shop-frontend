@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Products from "./features/products/containers/Products.tsx";
 import NewProduct from "./features/products/containers/NewProduct.tsx";
 import RegisterPage from './features/users/RegisterPage.tsx';
+import LoginPage from './features/users/LoginPage.tsx';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Products />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/new" element={<NewProduct />} />
             <Route path="*" element={<h1>Not found</h1>} />
