@@ -1,12 +1,13 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid2';
 import { Button, FormControl, MenuItem, Select, SelectChangeEvent, TextField, } from '@mui/material';
-import { ProductMutation } from '../../../types';
+import { ProductMutation } from '../../types';
 import InputLabel from '@mui/material/InputLabel';
-import FileInput from '../../../components/FileInput/FileInput.tsx';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
-import { fetchCategories } from '../../categories/categoriesThunk.ts';
-import { selectCategoriesItems, } from '../../categories/categoriesSlice.ts';
+import FileInput from '../../components/FileInput/FileInput.tsx';
+import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
+import { fetchCategories } from '../categories/categoriesThunk.ts';
+import { selectCategoriesItems, } from '../categories/categoriesSlice.ts';
+import { Editor } from '@tinymce/tinymce-react';
 
 interface Props {
   onSubmit: (product: ProductMutation) => void;
@@ -108,14 +109,34 @@ const ProductForm: React.FC<Props> = ({ onSubmit }) => {
         </Grid>
 
         <Grid size={{ xs: 12 }}>
-          <TextField
-            multiline
-            id="description"
-            name="description"
-            label="Description"
+          <Editor
+            tinymceScriptSrc='/tinymce/tinymce.min.js'
+            licenseKey='gpl'
+            init={{
+              height: 500,
+              menubar: false,
+              plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount'
+              ],
+              toolbar: 'undo redo | blocks | ' +
+                'bold italic forecolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+            }}
             value={form.description}
-            onChange={inputChangeHandler}
+            onEditorChange={(content) => setForm({ ...form, description: content })}
           />
+          {/*<TextField*/}
+          {/*  multiline*/}
+          {/*  id="description"*/}
+          {/*  name="description"*/}
+          {/*  label="Description"*/}
+          {/*  value={form.description}*/}
+          {/*  onChange={inputChangeHandler}*/}
+          {/*/>*/}
         </Grid>
 
         <Grid size={{ xs: 12 }}>

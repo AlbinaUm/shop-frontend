@@ -4,6 +4,7 @@ import { categoriesReducer } from "../features/categories/categoriesSlice.ts";
 import { usersReducer } from '../features/users/usersSlice.ts';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistStore } from 'redux-persist';
+import { productsAdminReducer } from '../features/admin/productsAdminSlice.ts';
 
 
 const usersPersistConfig = {
@@ -14,6 +15,7 @@ const usersPersistConfig = {
 
 const rootReducer = combineReducers({
   products: productsReducer,
+  adminProducts: productsAdminReducer,
   categories: categoriesReducer,
   users: persistReducer(usersPersistConfig, usersReducer),
 });

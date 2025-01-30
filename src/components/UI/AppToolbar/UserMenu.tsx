@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useAppDispatch } from '../../../app/hooks.ts';
 import { unsetUser } from '../../../features/users/usersSlice.ts';
 import { logout } from '../../../features/users/usersThunks.ts';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   user: User;
@@ -11,6 +12,7 @@ interface Props {
 
 const UserMenu: React.FC<Props> = ({user}) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -40,8 +42,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>My account</MenuItem>
+        {user && user.role === 'admin' && <MenuItem onClick={() => {navigate('/admin');setAnchorEl(null)}}>Admin</MenuItem>}
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </>
