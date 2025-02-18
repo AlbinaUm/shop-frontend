@@ -10,7 +10,9 @@ import { Alert, Avatar, Button } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { selectLoginError } from './usersSlice.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { login } from './usersThunks.ts';
+import { googleLogin, login } from './usersThunks.ts';
+import { GoogleLogin } from '@react-oauth/google';
+import FacebookLogin from '@greatsumini/react-facebook-login';
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
@@ -33,6 +35,11 @@ const RegisterPage = () => {
     navigate('/');
   };
 
+  const googleLoginHandler = async (credential:  string) => {
+    await dispatch(googleLogin(credential)).unwrap();
+    navigate('/');
+  };
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -44,6 +51,14 @@ const RegisterPage = () => {
           alignItems: 'center',
         }}
       >
+
+        <FacebookLogin
+          appId="1088597931155576"
+          onSuccess={(response) => {
+            console.log('Login Success!', response);
+          }}
+        />
+
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOpenIcon />
         </Avatar>
@@ -56,6 +71,17 @@ const RegisterPage = () => {
             {loginError.error}
           </Alert>
         )}
+
+        <Box sx={{ pt: 2}}>
+          <GoogleLogin
+            onSuccess={(credentialResponse => {
+                if (credentialResponse.credential) {
+                  void googleLoginHandler(credentialResponse.credential);
+                }
+            })}
+            onError={() => alert('Login failed!')}
+          />
+        </Box>
 
         <Box component="form" noValidate onSubmit={submitHandler} sx={{ mt: 3 }}>
           <Grid container direction={'column'} size={12} spacing={2}>

@@ -23,6 +23,7 @@ export interface Category {
 
 export interface RegisterMutation {
   username: string;
+  email: string;
   password: string;
 }
 
