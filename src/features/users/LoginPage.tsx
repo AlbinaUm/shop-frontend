@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RegisterMutation } from '../../types';
+import { LoginMutation } from '../../types';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
@@ -12,13 +12,12 @@ import { selectLoginError } from './usersSlice.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { googleLogin, login } from './usersThunks.ts';
 import { GoogleLogin } from '@react-oauth/google';
-import FacebookLogin from '@greatsumini/react-facebook-login';
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const loginError = useAppSelector(selectLoginError);
   const navigate = useNavigate();
-  const [form, setForm] = useState<RegisterMutation>({
+  const [form, setForm] = useState<LoginMutation>({
     username: "",
     password: "",
   });
@@ -51,14 +50,6 @@ const RegisterPage = () => {
           alignItems: 'center',
         }}
       >
-
-        <FacebookLogin
-          appId="1088597931155576"
-          onSuccess={(response) => {
-            console.log('Login Success!', response);
-          }}
-        />
-
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOpenIcon />
         </Avatar>
