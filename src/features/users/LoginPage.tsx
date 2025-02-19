@@ -10,16 +10,17 @@ import { Alert, Avatar, Button } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { selectLoginError } from './usersSlice.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { googleLogin, login } from './usersThunks.ts';
+import { facebookLogin, googleLogin, login } from './usersThunks.ts';
 import { GoogleLogin } from '@react-oauth/google';
+import FacebookLogin from '@greatsumini/react-facebook-login';
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const loginError = useAppSelector(selectLoginError);
   const navigate = useNavigate();
   const [form, setForm] = useState<LoginMutation>({
-    username: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
 
@@ -34,8 +35,13 @@ const RegisterPage = () => {
     navigate('/');
   };
 
-  const googleLoginHandler = async (credential:  string) => {
+  const googleLoginHandler = async (credential: string) => {
     await dispatch(googleLogin(credential)).unwrap();
+    navigate('/');
+  };
+
+  const facebookLoginHandler = async (accessToken: string, userID: string) => {
+    await dispatch(facebookLogin({accessToken, userID})).unwrap();
     navigate('/');
   };
 
@@ -50,8 +56,8 @@ const RegisterPage = () => {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOpenIcon />
+        <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+          <LockOpenIcon/>
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
@@ -63,26 +69,34 @@ const RegisterPage = () => {
           </Alert>
         )}
 
-        <Box sx={{ pt: 2}}>
+        <Box sx={{pt: 2}}>
+          <FacebookLogin
+            appId="4035739626713177"
+            onSuccess={response => facebookLoginHandler(response.accessToken, response.userID)}
+            onFail={() => alert('Facebook Login failed!')}
+          />
+        </Box>
+
+        <Box sx={{pt: 2}}>
           <GoogleLogin
             onSuccess={(credentialResponse => {
-                if (credentialResponse.credential) {
-                  void googleLoginHandler(credentialResponse.credential);
-                }
+              if (credentialResponse.credential) {
+                void googleLoginHandler(credentialResponse.credential);
+              }
             })}
             onError={() => alert('Login failed!')}
           />
         </Box>
 
-        <Box component="form" noValidate onSubmit={submitHandler} sx={{ mt: 3 }}>
+        <Box component="form" noValidate onSubmit={submitHandler} sx={{mt: 3}}>
           <Grid container direction={'column'} size={12} spacing={2}>
             <Grid size={12}>
               <TextField
                 fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                value={form.username}
+                id="email"
+                label="Email"
+                name="email"
+                value={form.email}
                 onChange={inputChangeHandler}
               />
             </Grid>
@@ -104,15 +118,15 @@ const RegisterPage = () => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{mt: 3, mb: 2}}
           >
             Sign In
           </Button>
           <Grid container justifyContent="flex-end">
-            <Grid >
+            <Grid>
 
-              <NavLink to='/register'>
-               No account yet? Sign Up
+              <NavLink to="/register">
+                No account yet? Sign Up
               </NavLink>
             </Grid>
           </Grid>

@@ -23,6 +23,22 @@ export const googleLogin = createAsyncThunk<User, string, { rejectValue: GlobalE
 );
 
 
+export const facebookLogin = createAsyncThunk<User, {accessToken: string, userID: string;}, { rejectValue: GlobalError }>(
+  'users/facebookLogin',
+  async (data, {rejectWithValue}) => {
+    try {
+      const response = await axiosApi.post<RegisterResponse>('users/facebook', data);
+      return response.data.user;
+    } catch (error) {
+      if (isAxiosError(error) && error.response && error.response.status === 400) {
+        return rejectWithValue(error.response.data as GlobalError);
+      }
+
+      throw error;
+    }
+  }
+);
+
 export const register = createAsyncThunk<
   RegisterResponse,
   RegisterMutation,

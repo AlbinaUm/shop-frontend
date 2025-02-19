@@ -25,8 +25,8 @@ const AdminMenu = () => {
          </ListItem>
 
          <ListItem disablePadding>
-           <ListItemButton component={Link} to='/admin/users'>
-             <ListItemText primary="Users"/>
+           <ListItemButton component={Link} to='/admin/cocktails'>
+             <ListItemText primary="Cocktails"/>
            </ListItemButton>
          </ListItem>
        </List>

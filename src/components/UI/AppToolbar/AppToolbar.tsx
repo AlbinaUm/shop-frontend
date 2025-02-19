@@ -4,6 +4,8 @@ import { useAppSelector } from '../../../app/hooks.ts';
 import { selectUser } from '../../../features/users/usersSlice.ts';
 import AnonymousMenu from './AnonymousMenu.tsx';
 import UserMenu from './UserMenu.tsx';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Link = styled(NavLink)({
   color: "inherit",
@@ -15,6 +17,14 @@ const Link = styled(NavLink)({
 
 const AppToolbar = () => {
   const user = useAppSelector(selectUser);
+  const [language, setLanguage] = useState<string>(localStorage.getItem('lang') || 'ru');
+  const { i18n } = useTranslation();
+
+  const setLang = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    i18n.changeLanguage(e.target.value);
+    localStorage.setItem('lang', e.currentTarget.value);
+    setLanguage(e.target.value);
+  };
 
   return (
     <AppBar position="sticky" sx={{ mb: 2 }}>
@@ -22,6 +32,12 @@ const AppToolbar = () => {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           <Link to="/">CompStore</Link>
         </Typography>
+
+        <select value={language} onChange={setLang}>
+          <option value="en">English</option>
+          <option value="ru">Русский</option>
+          <option value="fr">Francais</option>
+        </select>
 
         {user ?
           <UserMenu user={user}/>

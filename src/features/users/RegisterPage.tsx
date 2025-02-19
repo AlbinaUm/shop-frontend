@@ -23,6 +23,7 @@ const RegisterPage = () => {
     username: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
 
@@ -114,6 +115,21 @@ const RegisterPage = () => {
                 onChange={inputChangeHandler}
                 error={Boolean(getFieldError('password'))}
                 helperText={getFieldError('password')}
+              />
+            </Grid>
+
+            <Grid size={12}>
+              <TextField
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm password"
+                type="password"
+                id="confirmPassword"
+                value={form.confirmPassword}
+                onChange={inputChangeHandler}
+                error={Boolean(getFieldError('confirmPassword'))}
+                helperText={getFieldError('confirmPassword')}
               />
             </Grid>
           </Grid>

@@ -15,6 +15,13 @@ export interface ProductMutation {
   image: File | null;
 }
 
+export interface CocktailMutation {
+  title: string;
+  description: string;
+  ingredients: string;
+  image: File | null;
+}
+
 export interface Category {
   _id?: string;
   title: string;
@@ -25,10 +32,11 @@ export interface RegisterMutation {
   username: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
 export interface LoginMutation {
-  username: string;
+  email: string;
   password: string;
 }
 

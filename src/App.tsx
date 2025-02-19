@@ -11,9 +11,19 @@ import { selectUser } from './features/users/usersSlice.ts';
 import AdminLayout from './features/admin/AdminLayout.tsx';
 import AdminProductList from './features/admin/AdminProductList.tsx';
 import AdminCategoriesList from './features/admin/AdminCategoriesList.tsx';
+import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
+import CocktailForm from './features/admin/CocktailForm.tsx';
 
 const App = () => {
   const user = useAppSelector(selectUser);
+  const {t, i18n} = useTranslation();
+
+  useEffect(() => {
+    const langFromLS = localStorage.getItem('lang') || 'ru';
+    i18n.changeLanguage(langFromLS);
+  }, []);
+
   return (
     <>
       <CssBaseline/>
@@ -23,6 +33,8 @@ const App = () => {
 
       <main>
         <Container maxWidth="xl">
+          <h1>{t('welcome')}</h1>
+          <p>{t('language', {value: '123'})}</p>
           <Routes>
             <Route path="/" element={<Products/>}/>
             <Route path="/register" element={<RegisterPage/>}/>
@@ -37,6 +49,7 @@ const App = () => {
               <Route path="" element={<AdminProductList/>}/>
               <Route path="products" element={<AdminProductList/>}/>
               <Route path="categories" element={<AdminCategoriesList/>}/>
+              <Route path="cocktails" element={<CocktailForm/>}/>
               <Route path="products/new" element={<NewProduct/>}/>
             </Route>
 
